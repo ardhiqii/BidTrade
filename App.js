@@ -1,14 +1,15 @@
 import { StatusBar } from "expo-status-bar";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import * as SplashScreen from "expo-splash-screen";
 import FirstLoadingScreen from "./screens/FirstLoadingScreen";
 import LoginScreen from "./screens/LoginScreen";
-import AuthContextProvider from "./store/auth-context";
+import AuthContextProvider, { AuthContext } from "./store/auth-context";
 import SignupScreen from "./screens/SignupScreen";
 import { SafeAreaView } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
+import HomeScreen from "./screens/HomeScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,14 +17,38 @@ function AuthStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
         name="Signup"
         component={SignupScreen}
         options={{
           headerShown: false,
         }}
       />
-      <Stack.Screen name="Login" component={LoginScreen} />
     </Stack.Navigator>
+  );
+}
+
+function AuthenticatedStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={HomeScreen} />
+    </Stack.Navigator>
+  );
+}
+
+function Navigation() {
+  const { isAuthenticated } = useContext(AuthContext);
+  return (
+    <NavigationContainer>
+      {!isAuthenticated && <AuthStack />}
+      {isAuthenticated && <AuthenticatedStack />}
+    </NavigationContainer>
   );
 }
 
@@ -58,9 +83,7 @@ export default function App() {
       <StatusBar style="light" />
       <SafeAreaView style={{ flex: 1 }}>
         <AuthContextProvider>
-          <NavigationContainer>
-            <AuthStack />
-          </NavigationContainer>
+          <Navigation />
         </AuthContextProvider>
       </SafeAreaView>
     </>

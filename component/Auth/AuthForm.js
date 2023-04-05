@@ -11,6 +11,11 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
     enteredPassword: "",
   });
 
+  const {
+    email: emailIsInvalid,
+    password: passwordIsInvalid,
+    fullName: fullNameInvalid,
+  } = credentialsInvalid;
   function updateInputValueHandler(inputIdentifier, enteredValue) {
     setFormValue((prev) => {
       return {
@@ -19,28 +24,36 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
       };
     });
   }
+
+  function submitHandler() {
+    onSubmit(formValue);
+  }
   return (
     <View>
       <View style={styles.inputsContainer}>
-        <View>
-          <Input
-            label={"Full Name"}
-            keyboardType={"default"}
-            onUpdateValue={updateInputValueHandler.bind(
-              this,
-              "enteredFullName"
-            )}
-            icon={'person-outline'}
-            size={15}
-          />
-        </View>
+        {!isLogin && (
+          <View>
+            <Input
+              label={"Full Name"}
+              keyboardType={"default"}
+              onUpdateValue={updateInputValueHandler.bind(
+                this,
+                "enteredFullName"
+              )}
+              icon={"person-outline"}
+              size={15}
+            />
+          </View>
+        )}
 
         <View>
           <Input
             label={"Email Address"}
             keyboardType={"email-address"}
             onUpdateValue={updateInputValueHandler.bind(this, "enteredEmail")}
-            icon={'mail-outline'}
+            isInvalid={emailIsInvalid}
+            autoCapitalize={"none"}
+            icon={"mail-outline"}
             size={15}
           />
         </View>
@@ -52,13 +65,16 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
               this,
               "enteredPassword"
             )}
-            icon={'lock-closed-outline'}
+            isInvalid={passwordIsInvalid}
+            icon={"lock-closed-outline"}
             size={15}
           />
         </View>
       </View>
       <View>
-        <Button>{isLogin ? "Log In" : "Sign Up"}</Button>
+        <Button onPress={submitHandler}>
+          {isLogin ? "Log In" : "Sign Up"}
+        </Button>
       </View>
     </View>
   );

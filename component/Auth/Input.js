@@ -10,18 +10,25 @@ function Input({
   autoCapitalize,
   icon,
   size,
-  color
 }) {
   return (
     <View style={styles.container}>
-      <View style={styles.labelContainer}>
-        { icon && <Ionicons name={icon} size={size} color={color} />}
-        <Text style={styles.label}>{label}</Text>
+      <View style={[styles.labelContainer, isInvalid && styles.labelInvalid]}>
+        {icon && (
+          <Ionicons
+            name={icon}
+            size={size}
+            color={isInvalid ? "#fd785d" : "#9d9c9c"}
+          />
+        )}
+        <Text style={[styles.label, isInvalid && styles.labelInvalid]}>
+          {label}
+        </Text>
       </View>
       <TextInput
-        style={styles.input}
-        autoCapitalize={!autoCapitalize && "sentences"}
+        style={[styles.input, isInvalid && {borderColor:"#fd785d"}]}
         keyboardType={keyboardType}
+        autoCapitalize={!!autoCapitalize ? autoCapitalize : "sentences"}
         secureTextEntry={secure}
         onChangeText={onUpdateValue}
         value={value}
@@ -36,10 +43,10 @@ const styles = StyleSheet.create({
   container: {
     marginVertical: 8,
   },
-  labelContainer:{
-    flexDirection:'row',
-    alignItems:'center',
-    columnGap:8
+  labelContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    columnGap: 8,
   },
   label: {
     color: "#9d9c9c",
@@ -52,5 +59,9 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 15,
     borderColor: "#bdbdbd",
+  },
+  labelInvalid: {
+    color: "#fd785d",
+    borderColor: "#fd785d",
   },
 });
