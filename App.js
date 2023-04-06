@@ -12,6 +12,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import HomeScreen from "./screens/HomeScreen";
 import UserContextProvider from "./store/user-context";
+import AuthenticatedStack from "./navigation/authenticated/AuthenticatedStack";
 
 const Stack = createNativeStackNavigator();
 
@@ -36,20 +37,21 @@ function AuthStack() {
   );
 }
 
-function AuthenticatedStack() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} />
-    </Stack.Navigator>
-  );
-}
+// function AuthenticatedStack() {
+//   return (
+//     <Stack.Navigator>
+//       <Stack.Screen name="Home" component={HomeScreen} />
+//     </Stack.Navigator>
+//   );
+// }
 
 function Navigation() {
   const { isAuthenticated } = useContext(AuthContext);
   return (
     <NavigationContainer>
-      {!isAuthenticated && <AuthStack />}
-      {isAuthenticated && <AuthenticatedStack />}
+      {/* {!isAuthenticated && <AuthStack />}
+      {isAuthenticated && <AuthenticatedStack />} */}
+      <AuthenticatedStack/>
     </NavigationContainer>
   );
 }

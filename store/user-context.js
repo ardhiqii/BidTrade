@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {  createContext, useState } from "react";
 
 export const UserContext = createContext({
@@ -9,6 +10,7 @@ function UserContextProvider({children}){
     const [dataUser,setDataUser]= useState({})
     function updateDataUser(data){
         setDataUser(data)
+        // AsyncStorage.setItem('uid',data.uid)
     }
 
     const value = {

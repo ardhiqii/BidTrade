@@ -7,7 +7,7 @@ import {
 } from "firebase/auth";
 export async function createUser(email, password, fullName) {
   const user = await createUserWithEmailAndPassword(auth, email, password);
-  updateProfile(auth.currentUser, { displayName: fullName });
+  await updateProfile(auth.currentUser, { displayName: fullName });
   return user;
 }
 
@@ -26,4 +26,3 @@ export function authStatechanged() {
   }
   onAuthStateChanged(auth, currentUser);
 }
-
