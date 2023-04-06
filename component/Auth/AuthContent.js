@@ -38,7 +38,7 @@ function AuthContent({ isLogin, onAuthenticate }) {
       });
       return;
     }
-    onAuthenticate(enteredEmail, enteredPassword, enteredPassword);
+    onAuthenticate(enteredEmail, enteredPassword, enteredFullName);
   }
 
   return (

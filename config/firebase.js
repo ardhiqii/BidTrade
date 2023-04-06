@@ -1,5 +1,7 @@
 // Import the functions you need from the SDKs you need
-import * as firebase from "firebase";
+
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -10,16 +12,9 @@ const firebaseConfig = {
   projectId: "bidtrade-710bf",
   storageBucket: "bidtrade-710bf.appspot.com",
   messagingSenderId: "1029652502235",
-  appId: "1:1029652502235:web:e4c7057271fdfc4aef5efe"
+  appId: "1:1029652502235:web:e4c7057271fdfc4aef5efe",
 };
 
 // Initialize Firebase
-let app
-if(firebase.apps.length === 0){
-    app = firebase.intializeApp(firebaseConfig)
-} else{
-    app = firebase.app()
-}
-
-const auth = firebase.auth()
-export {auth}
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app)

@@ -40,6 +40,7 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
                 this,
                 "enteredFullName"
               )}
+              isInvalid={fullNameInvalid}
               icon={"person-outline"}
               size={15}
             />

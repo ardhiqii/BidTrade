@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1029652502235",
+    "project_id": "bidtrade-710bf",
+    "storage_bucket": "bidtrade-710bf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1029652502235:android:541741b2a9fec5c3ef5efe",
+        "android_client_info": {
+          "package_name": "com.bidtrade"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1029652502235-rfmipa7s65l2c7igbucq4mpqqvb1kahi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkf4hpkDBJ4levOGpeQMhmkgIGB9S2skQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1029652502235-rfmipa7s65l2c7igbucq4mpqqvb1kahi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
