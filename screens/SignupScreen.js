@@ -4,7 +4,9 @@ import { createUser } from "../util/auth";
 export function SignupScreen() {
   async function SignupHandler(email, password, fullName) {
     try {
-      const user = await createUser(email, password, fullName);
+      const credentialsUser = await createUser(email, password, fullName);
+      const idToken = credentialsUser._tokenResponse.idToken;
+      authCtx.authenticate(idToken);
     } catch (e) {
       console.log(e);
     }

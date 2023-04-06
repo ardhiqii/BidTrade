@@ -1,4 +1,4 @@
-import { auth } from "../config/firebase";
+import { admin, auth } from "../config/firebase";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -12,6 +12,18 @@ export async function createUser(email, password, fullName) {
 }
 
 export function login(email, password) {
-  const user =  signInWithEmailAndPassword(auth, email, password); 
+  const user = signInWithEmailAndPassword(auth, email, password);
   return user;
 }
+
+export function authStatechanged() {
+  function currentUser(user) {
+    if (user) {
+      console.log(user);
+    } else {
+      console.log("Tidak ada user");
+    }
+  }
+  onAuthStateChanged(auth, currentUser);
+}
+

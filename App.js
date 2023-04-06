@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import "./config/firebase"
+import "./config/firebase";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import * as SplashScreen from "expo-splash-screen";
@@ -11,6 +11,7 @@ import { SafeAreaView } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import HomeScreen from "./screens/HomeScreen";
+import UserContextProvider from "./store/user-context";
 
 const Stack = createNativeStackNavigator();
 
@@ -84,7 +85,9 @@ export default function App() {
       <StatusBar style="light" />
       <SafeAreaView style={{ flex: 1 }}>
         <AuthContextProvider>
-          <Navigation />
+          <UserContextProvider>
+            <Navigation />
+          </UserContextProvider>
         </AuthContextProvider>
       </SafeAreaView>
     </>
