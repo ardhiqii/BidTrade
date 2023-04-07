@@ -3,25 +3,32 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../../screens/HomeScreen";
 import AuctionScreen from "../../screens/auctionScreens/AuctionScreen";
 
-const Stack = createNativeStackNavigator()
+const Stack = createNativeStackNavigator();
 
-const BottomTab = createBottomTabNavigator()
+const BottomTab = createBottomTabNavigator();
 
-function BottomTabNavigator(){
-    return(
-        <BottomTab.Navigator>
-            <BottomTab.Screen name="Home" component={HomeScreen} />
-        </BottomTab.Navigator>
-    )
+function BottomTabNavigator() {
+  return (
+    <BottomTab.Navigator>
+      <BottomTab.Screen name="Home" component={HomeScreen} />
+    </BottomTab.Navigator>
+  );
 }
 
-function AuthenticatedStack(){
-    return(
-        <Stack.Navigator>
-            <Stack.Screen name="Auction" component={AuctionScreen}/>
-            <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator} />
-        </Stack.Navigator>
-    )
+function AuthenticatedStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator} />
+      <Stack.Screen
+        name="Auction"
+        component={AuctionScreen}
+        options={{
+          headerTransparent:true,
+          title:'',
+        }}
+      />
+    </Stack.Navigator>
+  );
 }
 
-export default AuthenticatedStack
+export default AuthenticatedStack;
