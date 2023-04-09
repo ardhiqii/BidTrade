@@ -9,14 +9,7 @@ function AuctionDisplay({ id, nameProduct, imgUri, currentPrice, index }) {
   return (
     <Pressable
       style={[
-        styles.container,
-        index % 2 === 0
-          ? {
-              marginRight: 10,
-            }
-          : {
-              marginLeft: 10,
-            },
+        styles.container
       ]}
       onPress={redirectProduct}
     >
@@ -35,10 +28,12 @@ export default AuctionDisplay;
 const styles = StyleSheet.create({
   container: {
     width: 120,
-    borderRadius: 10,
     height: 180,
+    borderRadius: 10,
     marginVertical: 10,
-    elevation: 3,
+    backgroundColor:'white',
+    elevation:5
+
   },
   containerImage: {
     width: "100%",
@@ -48,8 +43,10 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   image: {
-    flex: 1,
+    width:'100%',
+    height:'100%',
     resizeMode: "cover",
+    overflow:'hidden'
   },
   containerName: {
     paddingHorizontal: 10,
