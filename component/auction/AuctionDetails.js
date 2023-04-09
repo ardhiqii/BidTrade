@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 
-function AuctionDetailsTop() {
+function AuctionDetailsTop(currentPrice) {
   return (
     <View style={stylesTop.container}>
       <View style={[stylesTop.box]}>
@@ -15,7 +15,9 @@ function AuctionDetailsTop() {
           Current Price
         </Text>
         <View>
-          <Text style={[stylesTop.text, { textAlign: "right" }]}>Rp.5.000</Text>
+          <Text style={[stylesTop.text, { textAlign: "right" }]}>
+            {"Rp." + currentPrice.currentPrice}
+          </Text>
         </View>
       </View>
     </View>
@@ -33,11 +35,11 @@ function AuctionDetailsDescription() {
   );
 }
 
-function AuctionDetails() {
+function AuctionDetails({ nameProduct, currentPrice }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.textProduct}>Togey</Text>
-      <AuctionDetailsTop />
+      <Text style={styles.textProduct}>{nameProduct}</Text>
+      <AuctionDetailsTop currentPrice={currentPrice} />
       <AuctionDetailsDescription />
     </View>
   );

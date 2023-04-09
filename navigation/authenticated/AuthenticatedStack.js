@@ -10,7 +10,23 @@ const BottomTab = createBottomTabNavigator();
 function BottomTabNavigator() {
   return (
     <BottomTab.Navigator>
-      <BottomTab.Screen name="Home" component={HomeScreen} />
+      <BottomTab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          headerTitle: "Browse",
+          headerTitleStyle:{
+            fontSize:30
+          },
+          headerTintColor:'white',
+          headerStyle:{
+            backgroundColor:'#3072e8',
+            elevation:0,
+            height:110,
+          },
+          
+        }}
+      />
     </BottomTab.Navigator>
   );
 }
@@ -18,13 +34,19 @@ function BottomTabNavigator() {
 function AuthenticatedStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator} />
+      <Stack.Screen
+        name="BottomTabNavigator"
+        component={BottomTabNavigator}
+        options={{
+          headerShown: false,
+        }}
+      />
       <Stack.Screen
         name="Auction"
         component={AuctionScreen}
         options={{
-          headerTransparent:true,
-          title:'',
+          headerTransparent: true,
+          title: "",
         }}
       />
     </Stack.Navigator>

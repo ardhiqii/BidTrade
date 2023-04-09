@@ -1,18 +1,27 @@
-import { Dimensions, Image, ImageBackground, StyleSheet, View } from "react-native";
+import {
+  Dimensions,
+  Image,
+  ImageBackground,
+  StyleSheet,
+  View,
+} from "react-native";
 import AuctionDetails from "./AuctionDetails";
 import Button from "../ui/Button";
+import { useRoute } from "@react-navigation/native";
+import { DUMMY_DATA } from "./AuctionsDisplay";
 
-const deviceHeight = Dimensions.get('window').height
-const uri = 'https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/advisor/in/wp-content/uploads/2022/03/monkey-g412399084_1280.jpg'
-// const uri = 'https://cdn.discordapp.com/attachments/777233158130892873/1093666601506705448/ngulum.jpg'
+const deviceHeight = Dimensions.get("window").height;
 function AuctionContent() {
+  const route = useRoute();
+  const dataProduct = DUMMY_DATA.filter((data) => data.id === route.params)[0];
+  const { currentPrice, imgUri, nameProduct } = dataProduct;
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         {/* Images */}
         <ImageBackground
           source={{
-            uri: uri,
+            uri: imgUri,
           }}
           style={styles.imageBackground}
           blurRadius={100}
@@ -20,14 +29,14 @@ function AuctionContent() {
           <Image
             style={styles.image}
             source={{
-              uri: uri,
+              uri: imgUri,
             }}
           />
         </ImageBackground>
       </View>
-      <AuctionDetails />
+      <AuctionDetails nameProduct={nameProduct} currentPrice={currentPrice} />
       <View style={styles.buttonContainer}>
-        <Button style={styles.button} >Place Bid</Button>
+        <Button style={styles.button}>Place Bid</Button>
       </View>
     </View>
   );
@@ -55,10 +64,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   buttonContainer: {
-    width:'100%',
+    width: "100%",
     alignItems: "center",
-    position:'absolute',
-    top:(deviceHeight-100)
+    position: "absolute",
+    top: deviceHeight - 100,
   },
   button: {
     width: "80%",
