@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
 
-function AuctionDetailsTop(currentPrice) {
+function AuctionDetailsTop({ currentPrice, nameSeller }) {
   return (
     <View style={stylesTop.container}>
       <View style={[stylesTop.box]}>
         <Text style={stylesTop.headerText}>Seller</Text>
         <View>
-          <Text style={[stylesTop.text]}>Aufa Fauqi Ardhiqi</Text>
+          <Text style={[stylesTop.text]}>{nameSeller}</Text>
         </View>
       </View>
       {/* ================ */}
@@ -16,7 +16,7 @@ function AuctionDetailsTop(currentPrice) {
         </Text>
         <View>
           <Text style={[stylesTop.text, { textAlign: "right" }]}>
-            {"Rp." + currentPrice.currentPrice}
+            {"Rp." + currentPrice}
           </Text>
         </View>
       </View>
@@ -24,23 +24,30 @@ function AuctionDetailsTop(currentPrice) {
   );
 }
 
-function AuctionDetailsDescription() {
+function AuctionDetailsDescription({ description }) {
   return (
     <View style={stylesDes.container}>
       <Text style={[stylesDes.text]}>Description</Text>
-      <Text style={stylesDes.desText}>
-        Togey a.k.a LEO is a person with animal behavior such as DOG
-      </Text>
+      <Text style={stylesDes.desText}>{description}</Text>
     </View>
   );
 }
 
-function AuctionDetails({ nameProduct, currentPrice }) {
+function AuctionDetails({
+  nameProduct,
+  currentPrice,
+  description,
+  nameSeller,
+}) {
+  const detailsTopProps = {
+    currentPrice,
+    nameSeller,
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.textProduct}>{nameProduct}</Text>
-      <AuctionDetailsTop currentPrice={currentPrice} />
-      <AuctionDetailsDescription />
+      <AuctionDetailsTop {...detailsTopProps} />
+      <AuctionDetailsDescription description={description} />
     </View>
   );
 }

@@ -3,18 +3,47 @@ import {
   Image,
   ImageBackground,
   StyleSheet,
+  Text,
   View,
 } from "react-native";
 import AuctionDetails from "./AuctionDetails";
 import Button from "../ui/Button";
 import { useRoute } from "@react-navigation/native";
 import { DUMMY_DATA } from "./AuctionsDisplay";
+import { useEffect, useState } from "react";
+import { getDataAuctionWithId } from "../../util/db";
+import { getDataUserById } from "../../util/user";
 
 const deviceHeight = Dimensions.get("window").height;
 function AuctionContent() {
+  const [dataProduct, setDataProduct] = useState();
+  const [nameSeller,setNameSeller] = useState()
+  const [fetchingData, setFetchingData] = useState(true);
   const route = useRoute();
-  const dataProduct = DUMMY_DATA.filter((data) => data.id === route.params)[0];
-  const { currentPrice, imgUri, nameProduct } = dataProduct;
+  const idProduct = route.params;
+  useEffect(() => {
+    async function getData() {
+      const data = await getDataAuctionWithId(idProduct);
+      setDataProduct(data);
+      const sellerName = await getDataUserById(data.id_seller)
+      setNameSeller(sellerName["full_name"])
+      setFetchingData(false);
+    }
+    getData();
+  }, []);
+  if (fetchingData) {
+    return (
+      <View>
+        <Text>LOADING BOS</Text>
+      </View>
+    );
+  }
+  const {
+    imgUri,
+    name_product: nameProduct,
+    current_price: currentPrice,
+    description,
+  } = dataProduct;
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
@@ -34,7 +63,7 @@ function AuctionContent() {
           />
         </ImageBackground>
       </View>
-      <AuctionDetails nameProduct={nameProduct} currentPrice={currentPrice} />
+      <AuctionDetails nameProduct={nameProduct} currentPrice={currentPrice} description={description} nameSeller={nameSeller} />
       <View style={styles.buttonContainer}>
         <Button style={styles.button}>Place Bid</Button>
       </View>

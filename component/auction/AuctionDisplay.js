@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
-function AuctionDisplay({ id, nameProduct, imgUri, currentPrice, index }) {
+function AuctionDisplay({ id, name_product, imgUri }) {
     const nav = useNavigation()
     function redirectProduct(){
         nav.navigate('Auction',id)
@@ -17,7 +17,7 @@ function AuctionDisplay({ id, nameProduct, imgUri, currentPrice, index }) {
         <Image source={{ uri: imgUri }} style={styles.image} />
       </View>
       <View style={styles.containerName}>
-        <Text>{nameProduct}</Text>
+        <Text>{name_product}</Text>
       </View>
     </Pressable>
   );

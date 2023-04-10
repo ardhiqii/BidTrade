@@ -1,5 +1,8 @@
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import AuctionDisplay from "./AuctionDisplay";
+import { getDatasAuction } from "../../util/db";
+import { useEffect, useState } from "react";
+import { getDataUserById } from "../../util/user";
 
 export const DUMMY_DATA = [
     {
@@ -21,16 +24,37 @@ export const DUMMY_DATA = [
         currentPrice:'10000'
     }
 ]
+
 function renderAuction(itemData){
     return <AuctionDisplay {...itemData.item} index={itemData.index}/>
 }
 
 function AuctionsDisplay(){
+    const [dataAuctions, setDataAuctions] = useState()
+    const [fetchingData,setFetchingData] = useState(true)
+    useEffect(()=>{
+        async function getDatas(){
+            const datas = await getDatasAuction()
+            setDataAuctions(datas)
+            setFetchingData(false)
+            return datas
+        }
+        try{
+            getDatas()
+            
+        }catch(e){
+        }
+    },[])
     function itemSeperator(){
         return <View style={styles.itemSeperatorStyle} />
     }
+    if(fetchingData){
+        return<View>
+            <Text>Loading mase</Text>
+        </View>
+    }
     return(
-        <FlatList contentContainerStyle={styles.container} ItemSeparatorComponent={itemSeperator}  data={DUMMY_DATA} keyExtractor={(item) => item.id} renderItem={renderAuction} horizontal={true} showsHorizontalScrollIndicator={false}   />
+        <FlatList contentContainerStyle={styles.container} ItemSeparatorComponent={itemSeperator}  data={dataAuctions} keyExtractor={(item) => item.id} renderItem={renderAuction} horizontal={true} showsHorizontalScrollIndicator={false}   />
     )
 }
 
