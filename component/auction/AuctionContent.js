@@ -80,7 +80,6 @@ const styles = StyleSheet.create({
     height: "55%",
     maxHeight: 430,
     width: "100%",
-    backgroundColor: "green",
   },
   imageBackground: {
     flex: 1,

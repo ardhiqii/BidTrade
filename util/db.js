@@ -1,4 +1,11 @@
-import { doc, collection, getDoc, getDocs } from "firebase/firestore";
+import {
+  doc,
+  collection,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "../config/firebase";
 
 export async function getDataAuctionWithId(id_product) {
@@ -7,8 +14,20 @@ export async function getDataAuctionWithId(id_product) {
   return data;
 }
 
-export async function getDatasAuction() {
-  const snapShot = await getDocs(collection(db, "auctions"));
-  const allDocs = snapShot?.docs.map(doc => doc.data())
+export async function getDatasAuction(idProducts) {
+  let snapShot;
+  let allDocs;
+  if (idProducts) {
+    const q = query(collection(db, "auctions"), where("id", "in", idProducts));
+    snapShot = await getDocs(q);
+  } else {
+    snapShot = await getDocs(collection(db, "auctions"));
+  }
+
+  allDocs = snapShot?.docs.map((doc) => doc.data());
   return allDocs;
+}
+
+export async function temporary(idProducts) {
+  console.log(idProducts);
 }

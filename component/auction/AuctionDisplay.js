@@ -1,10 +1,17 @@
 import { useNavigation } from "@react-navigation/native";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { updateDataRecentUser } from "../../util/user";
 
-function AuctionDisplay({ id, name_product, imgUri }) {
+function AuctionDisplay({ id, name_product, imgUri,empty }) {
     const nav = useNavigation()
-    function redirectProduct(){
+    async function redirectProduct(){
         nav.navigate('Auction',id)
+        await updateDataRecentUser('676oJOJCOZZZehTmxOdQCpviHX33',id)
+    }
+    if (empty){
+      return <View style={styles.containerEmpty}>
+        <Text style={styles.textEmpty}>There is no recent auction</Text>
+      </View>
     }
   return (
     <Pressable
@@ -52,4 +59,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 8,
   },
+  containerEmpty:{
+    width:"100%",
+    height:120,
+    justifyContent:'center'
+  },
+  textEmpty:{
+    textAlign:'center',
+    fontSize:20,
+    color:'#7d7d7d'
+  }
 });

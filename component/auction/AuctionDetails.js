@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 function AuctionDetailsTop({ currentPrice, nameSeller }) {
   return (
@@ -44,11 +44,11 @@ function AuctionDetails({
     nameSeller,
   };
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={{rowGap:15}} >
       <Text style={styles.textProduct}>{nameProduct}</Text>
       <AuctionDetailsTop {...detailsTopProps} />
       <AuctionDetailsDescription description={description} />
-    </View>
+    </ScrollView>
   );
 }
 
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 25,
     paddingTop: 12,
-    rowGap: 15,
+
   },
   textProduct: {
     fontSize: 25,
