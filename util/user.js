@@ -22,7 +22,6 @@ export async function updateDataRecentUser(id_user, id_product) {
   try {
     const data = await getDataUserById(id_user);
     const arr = data.recent_auctions;
-    console.log(arr);
     if (arr.length === 5) {
       await updateDoc(doc(db, `users/${id_user}`), {
         recent_auctions: arrayRemove(arr[0]),

@@ -28,6 +28,3 @@ export async function getDatasAuction(idProducts) {
   return allDocs;
 }
 
-export async function temporary(idProducts) {
-  console.log(idProducts);
-}

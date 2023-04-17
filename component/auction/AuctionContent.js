@@ -13,11 +13,17 @@ import { DUMMY_DATA } from "./AuctionsDisplay";
 import { useEffect, useState } from "react";
 import { getDataAuctionWithId } from "../../util/db";
 import { getDataUserById } from "../../util/user";
+import { updateAuctionPrice } from "../../util/auct";
+import ModalPlaceBid from "./ModalPlaceBid";
+import { TextInput } from "react-native-gesture-handler";
+import ModalAuctionProduct from "./ModalAuctionProduct";
 
 const deviceHeight = Dimensions.get("window").height;
 function AuctionContent() {
   const [dataProduct, setDataProduct] = useState();
+  const [uniqueValue,setUniqueValue] = useState(1)
   const [nameSeller,setNameSeller] = useState()
+  const [modalIsVisible,setModalIsVisible] = useState(false)
   const [fetchingData, setFetchingData] = useState(true);
   const route = useRoute();
   const idProduct = route.params;
@@ -30,7 +36,7 @@ function AuctionContent() {
       setFetchingData(false);
     }
     getData();
-  }, []);
+  }, [uniqueValue]);
   if (fetchingData) {
     return (
       <View>
@@ -44,8 +50,13 @@ function AuctionContent() {
     current_price: currentPrice,
     description,
   } = dataProduct;
+  const updatePriceHandler = () =>{
+    setFetchingData(false)
+    setUniqueValue((prev)=>prev+1)
+    updateAuctionPrice(idProduct,1000000)
+  }
   return (
-    <View style={styles.container}>
+    <View style={styles.container} key={uniqueValue}>
       <View style={styles.imageContainer}>
         {/* Images */}
         <ImageBackground
@@ -64,8 +75,9 @@ function AuctionContent() {
         </ImageBackground>
       </View>
       <AuctionDetails nameProduct={nameProduct} currentPrice={currentPrice} description={description} nameSeller={nameSeller} />
+      <ModalPlaceBid onModal={modalIsVisible} changeOnModal={setModalIsVisible} />
       <View style={styles.buttonContainer}>
-        <Button style={styles.button}>Place Bid</Button>
+        <Button style={styles.button} onPress={()=>setModalIsVisible(true)}>Place Bid</Button>
       </View>
     </View>
   );
