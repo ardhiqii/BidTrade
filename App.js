@@ -37,21 +37,13 @@ function AuthStack() {
   );
 }
 
-// function AuthenticatedStack() {
-//   return (
-//     <Stack.Navigator>
-//       <Stack.Screen name="Home" component={HomeScreen} />
-//     </Stack.Navigator>
-//   );
-// }
-
 function Navigation() {
   const { isAuthenticated } = useContext(AuthContext);
   return (
     <NavigationContainer>
-      {/* {!isAuthenticated && <AuthStack />}
-      {isAuthenticated && <AuthenticatedStack />} */}
-      <AuthenticatedStack/>
+      {!isAuthenticated && <AuthStack />}
+      {isAuthenticated && <AuthenticatedStack />}
+      
     </NavigationContainer>
   );
 }

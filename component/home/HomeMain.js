@@ -9,41 +9,40 @@ import { doc, onSnapshot, query } from "firebase/firestore";
 import { db } from "../../config/firebase";
 
 function HomeMain() {
-  const [dataUser,setDataUser] = useState()
-  const [docs,setDocs] = useState()
-  const [fetchingData,setFetchingData] = useState(true)
-  // const userCtx = useContext(UserContext)
-  // userCtx.updateDataUser('676oJOJCOZZZehTmxOdQCpviHX33')
+  const [dataUser, setDataUser] = useState();
+  const [fetchingData, setFetchingData] = useState(true);
+  const userCtx = useContext(UserContext);
 
-  let unsubscribe
-  function listenToADocument(){
-    const id_user = '676oJOJCOZZZehTmxOdQCpviHX33'
-    unsubscribe = onSnapshot(doc(db,`users/${id_user}`),(docSnapshot)=>{
-      if(docSnapshot.exists()){
-        const docData = docSnapshot.data()
-        setDocs(docData)
-        setDataUser(docData)
-        setFetchingData(false)
+  let unsubscribe;
+  function listenToADocument() {
+    const id_user = userCtx.user.uid;
+    unsubscribe = onSnapshot(doc(db, `users/${id_user}`), (docSnapshot) => {
+      if (docSnapshot.exists()) {
+        const docData = docSnapshot.data();
+        setDataUser(docData);
+        setFetchingData(false);
       }
-    })
+    });
+  }
+  useEffect(() => {
+    listenToADocument();
+    return () => unsubscribe();
+  }, []);
+  if (fetchingData) {
+    return (
+      <View>
+        <Text>Loading mase</Text>
+      </View>
+    );
+  }
 
-  }
-  useEffect(()=>{
-    listenToADocument()
-    return () => unsubscribe()
-  },[])
-  if(fetchingData){
-    return <View>
-      <Text>Loading mase</Text>
-    </View>
-  }
-  
   return (
     <ScrollView
       style={styles.container}
       nestedScrollEnabled
       contentContainerStyle={{ rowGap: 15 }}
     >
+      <Text>Welcome, {dataUser.full_name}</Text>
       <BoxContent>
         <Carousel />
       </BoxContent>
@@ -52,7 +51,10 @@ function HomeMain() {
           <AuctionsDisplay type={"popular"} />
         </BoxContent>
         <BoxContent header={"Recent Auction"}>
-          <AuctionsDisplay type={"recent"} recentAuctions={dataUser.recent_auctions} />
+          <AuctionsDisplay
+            type={"recent"}
+            recentAuctions={dataUser.recent_auctions}
+          />
         </BoxContent>
       </View>
     </ScrollView>

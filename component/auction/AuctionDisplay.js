@@ -1,12 +1,15 @@
 import { useNavigation } from "@react-navigation/native";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { updateDataRecentUser } from "../../util/user";
+import { useContext } from "react";
+import { UserContext } from "../../store/user-context";
 
 function AuctionDisplay({ id, name_product, imgUri,empty }) {
     const nav = useNavigation()
+    const userCtx = useContext(UserContext)
     async function redirectProduct(){
         nav.navigate('Auction',id)
-        await updateDataRecentUser('676oJOJCOZZZehTmxOdQCpviHX33',id)
+        await updateDataRecentUser(userCtx.user.uid,id)
     }
     if (empty){
       return <View style={styles.containerEmpty}>
