@@ -10,16 +10,9 @@ import {
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
-import FormatCurrency from "../../util/FormatCurrency";
+import FormatCurrency from "../../../util/FormatCurrency";
+import TextInputPrice from "../../ui/TextInputPrice";
 function ModalPlaceBid({ onModal, changeOnModal }) {
-  const [price, setPrice] = useState("");
-  const inputPriceHandler = (e) => {
-    const rawData = e.split('.')
-    const data = rawData.join('')
-    const formatted =FormatCurrency(data);
-    setPrice(formatted);
-  };
-
   return (
     <>
       <Modal
@@ -44,10 +37,7 @@ function ModalPlaceBid({ onModal, changeOnModal }) {
           </View>
           <View style={styles.contentContainer}>
             <Text>{`Minimal: Rp.10.000`}</Text>
-            <View style={styles.inputContainer}>
-              <Text>Rp.</Text>
-              <TextInput value={price} onChangeText={inputPriceHandler} />
-            </View>
+            <TextInputPrice />
           </View>
         </View>
       </Modal>
@@ -95,5 +85,19 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
+    borderBottomWidth: 2,
+    borderBottomColor: "#a3a2a2",
+  },
+  textInput: {
+    color: "#a3a2a2",
+  },
+  inputcontainerFocus: {
+    borderBottomColor: "#3072e8",
+  },
+  textInputFocus: {
+    color: "#3072e8",
+  },
+  input: {
+    width: "85%",
   },
 });

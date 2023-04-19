@@ -1,6 +1,6 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { truncateText } from "../../util/truncateText";
-import ModalAuctionProduct from "./ModalAuctionProduct";
+import ModalAuctionProduct from "./modal/ModalAuctionProduct";
 import { useState } from "react";
 
 function AuctionDetailsTop({ currentPrice, nameSeller }) {
@@ -27,8 +27,13 @@ function AuctionDetailsTop({ currentPrice, nameSeller }) {
   );
 }
 
-function AuctionDetailsDescription({ description,visible,changeVisible,openModal }) {
-  const truncated = truncateText(description)
+function AuctionDetailsDescription({
+  description,
+  visible,
+  changeVisible,
+  openModal,
+}) {
+  const truncated = truncateText(description);
   return (
     <View style={stylesDes.container}>
       <Text style={[stylesDes.text]}>Description</Text>
@@ -36,7 +41,7 @@ function AuctionDetailsDescription({ description,visible,changeVisible,openModal
       <Pressable onPress={openModal}>
         <Text style={stylesDes.readMoreText}>Read More</Text>
       </Pressable>
-      <ModalAuctionProduct onModal={visible} changeOnModal={changeVisible}/>
+      <ModalAuctionProduct onModal={visible} changeOnModal={changeVisible} />
     </View>
   );
 }
@@ -51,15 +56,20 @@ function AuctionDetails({
     currentPrice,
     nameSeller,
   };
-  const [modalIsVisible,setModalIsVisible] = useState(false)
-  function openModal(){
-    setModalIsVisible(true)
+  const [modalIsVisible, setModalIsVisible] = useState(false);
+  function openModal() {
+    setModalIsVisible(true);
   }
   return (
-    <ScrollView style={styles.container} contentContainerStyle={{rowGap:15}} >
+    <ScrollView style={styles.container} contentContainerStyle={{ rowGap: 15 }}>
       <Text style={styles.textProduct}>{nameProduct}</Text>
       <AuctionDetailsTop {...detailsTopProps} />
-      <AuctionDetailsDescription description={description} visible={modalIsVisible} changeVisible={setModalIsVisible} openModal={openModal} />
+      <AuctionDetailsDescription
+        description={description}
+        visible={modalIsVisible}
+        changeVisible={setModalIsVisible}
+        openModal={openModal}
+      />
     </ScrollView>
   );
 }
@@ -70,7 +80,6 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 25,
     paddingTop: 12,
-
   },
   textProduct: {
     fontSize: 25,
@@ -110,7 +119,7 @@ const stylesDes = StyleSheet.create({
   desText: {
     color: "#9a9a9a",
   },
-  readMoreText:{
-    color:'#3072e8'
-  }
+  readMoreText: {
+    color: "#3072e8",
+  },
 });
