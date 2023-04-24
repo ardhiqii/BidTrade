@@ -52,9 +52,19 @@ function AuctionContent() {
   } = dataProduct;
   const updatePriceHandler = () => {
     setFetchingData(false);
-    setUniqueValue((prev) => prev + 1);
+    
     updateAuctionPrice(idProduct, 1000000);
   };
+  const forceRefreshHandler = () =>{
+    setUniqueValue((prev) => prev + 1);
+  }
+  const modalPlaceBidProps = {
+    minPrice: currentPrice,
+    idProduct:idProduct,
+    onModal: modalIsVisible,
+    changeOnModal: setModalIsVisible,
+    forceRefresh:forceRefreshHandler
+  }
   return (
     <View style={styles.container} key={uniqueValue}>
       <View style={styles.imageContainer}>
@@ -80,9 +90,7 @@ function AuctionContent() {
         description={description}
         nameSeller={nameSeller}
       />
-      <ModalPlaceBid
-        onModal={modalIsVisible}
-        changeOnModal={setModalIsVisible}
+      <ModalPlaceBid {...modalPlaceBidProps}
       />
       <View style={styles.buttonContainer}>
         <Button style={styles.button} onPress={() => setModalIsVisible(true)}>

@@ -3,9 +3,9 @@ import AuthContent from "../component/Auth/AuthContent";
 import { login } from "../util/auth";
 import { AuthContext } from "../store/auth-context";
 import { UserContext } from "../store/user-context";
-import { Alert } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import LoadingOverlay from "../component/ui/LoadingOverlay";
-import ModalPlaceBid from "../component/auction/modal/ModalPlaceBid";
+import ModalAuctionProduct from "../component/auction/modal/ModalAuctionProduct";
 
 function LoginScreen() {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
@@ -34,9 +34,14 @@ function LoginScreen() {
   return (
     <>
       <AuthContent isLogin onAuthenticate={loginHandler} />
-      <ModalPlaceBid onModal={true} />
+      <ModalAuctionProduct styles={styles.modalStyles}/>
     </>
   );
 }
 
 export default LoginScreen;
+const styles = StyleSheet.create({
+  modalStyles:{
+    height:'100%',
+  }
+})

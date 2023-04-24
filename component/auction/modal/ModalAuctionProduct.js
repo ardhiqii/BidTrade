@@ -1,16 +1,15 @@
 import { useNavigation } from "@react-navigation/native"
 import { useEffect, useState } from "react"
 import { BackHandler, Modal, Text, View } from "react-native"
+import ModalLayout from "../../ui/ModaLayout"
 
 
-function ModalAuctionProduct({onModal,changeOnModal}) {
+function ModalAuctionProduct({onModal,changeOnModal,styles}) {
 
   return (
-    <Modal visible={onModal} onRequestClose={()=>changeOnModal(false)} animationType="slide">
-        <View>
-            <Text>This is modal</Text>
-        </View>
-    </Modal>
+    <ModalLayout onModal={onModal} changeOnModal={changeOnModal} customStyles={styles}>
+      <Text>INI MODAL</Text>
+    </ModalLayout>
   )
 }
 

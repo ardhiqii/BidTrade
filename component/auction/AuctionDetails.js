@@ -2,6 +2,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { truncateText } from "../../util/truncateText";
 import ModalAuctionProduct from "./modal/ModalAuctionProduct";
 import { useState } from "react";
+import FormatCurrency from "../../util/FormatCurrency";
 
 function AuctionDetailsTop({ currentPrice, nameSeller }) {
   return (
@@ -19,7 +20,7 @@ function AuctionDetailsTop({ currentPrice, nameSeller }) {
         </Text>
         <View>
           <Text style={[stylesTop.text, { textAlign: "right" }]}>
-            {"Rp." + currentPrice}
+            Rp {FormatCurrency(currentPrice)}
           </Text>
         </View>
       </View>

@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   BackHandler,
   Modal,
@@ -12,23 +12,40 @@ import { TextInput } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 import FormatCurrency from "../../../util/FormatCurrency";
 import TextInputPrice from "../../ui/TextInputPrice";
-function ModalPlaceBid({ onModal, changeOnModal }) {
+import PlaceBidButton from "./PlaceBidButton";
+import { UserContext } from "../../../store/user-context";
+import { updateAuctionPrice } from "../../../util/auct";
+import ModalLayout from "../../ui/ModaLayout";
+function ModalPlaceBid({ onModal, changeOnModal,minPrice,idProduct,forceRefresh }) {
+  const [inputUser, setInputUser] = useState({
+    valid: true,
+    price: "0",
+  });
+  const userCtx = useContext(UserContext)
+  const userId = userCtx.user.uid
+  const submitHandler = async () => {
+    userPrice = parseInt(inputUser.price.split(".").join(""), 10);
+    if (userPrice <= minPrice) {
+      setInputUser((prev) => {
+        return {
+          ...prev,
+          valid: false,
+        };
+      });
+      return false;
+    }
+    setInputUser((prev) => {
+      return {
+        ...prev,
+        valid: true,
+      };
+    });
+    await updateAuctionPrice(userId,idProduct,userPrice)
+    return true;
+  };
   return (
     <>
-      <Modal
-        visible={true}
-        onRequestClose={() => changeOnModal(false)}
-        transparent={true}
-      >
-        <View style={styles.backgroundDark}></View>
-      </Modal>
-      <Modal
-        transparent={true}
-        visible={true}
-        onRequestClose={() => changeOnModal(false)}
-        animationType="slide"
-      >
-        <View style={styles.container}>
+          <ModalLayout onModal={onModal} changeOnModal={changeOnModal}>
           <View style={styles.header}>
             <Pressable onPress={() => changeOnModal(false)}>
               <Ionicons name="md-close-outline" size={40} color={"#a8a8a8"} />
@@ -36,11 +53,22 @@ function ModalPlaceBid({ onModal, changeOnModal }) {
             <Text style={styles.headerText}>Place A Bid</Text>
           </View>
           <View style={styles.contentContainer}>
-            <Text>{`Minimal: Rp.10.000`}</Text>
-            <TextInputPrice />
+            <Text>Minimal: Rp {FormatCurrency(minPrice)}</Text>
+            <TextInputPrice nominal={inputUser} setNominal={setInputUser} modalState={onModal} />
+            {!inputUser.valid && (
+              <Text style={styles.invalidText}>
+                *Place a bid with higher current price
+              </Text>
+            )}
           </View>
-        </View>
-      </Modal>
+          <PlaceBidButton
+            onConfirm={submitHandler}
+            forceRefreshHandler={forceRefresh}
+            closeModal={changeOnModal}
+          />
+          </ModalLayout>
+          
+        
     </>
   );
 }
@@ -48,20 +76,7 @@ function ModalPlaceBid({ onModal, changeOnModal }) {
 export default ModalPlaceBid;
 
 const styles = StyleSheet.create({
-  backgroundDark: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.5)",
-  },
-  container: {
-    height: "50%",
-    marginTop: "auto",
-    backgroundColor: "#e8e8e8",
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    borderWidth: 2,
-    borderColor: "#e8e8e8",
-  },
-  header: {
+    header: {
     backgroundColor: "white",
     overflow: "hidden",
     borderTopLeftRadius: 10,
@@ -78,8 +93,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   contentContainer: {
+    height: 180,
     paddingHorizontal: 25,
     paddingVertical: 15,
+    rowGap: 15,
     backgroundColor: "white",
   },
   inputContainer: {
@@ -99,5 +116,8 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "85%",
+  },
+  invalidText: {
+    color: "#fd785d",
   },
 });
