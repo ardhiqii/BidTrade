@@ -1,0 +1,3 @@
+for general layout
+paddingHorizontal:25
+paddingVertical:15

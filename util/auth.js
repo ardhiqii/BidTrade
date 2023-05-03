@@ -7,12 +7,11 @@ import {
 } from "firebase/auth";
 export async function createUser(email, password, fullName) {
   const user = await createUserWithEmailAndPassword(auth, email, password);
-  await updateProfile(auth.currentUser, { displayName: fullName });
   return user;
 }
 
-export function login(email, password) {
-  const user = signInWithEmailAndPassword(auth, email, password);
+export async function login(email, password) {
+  const user = await signInWithEmailAndPassword(auth, email, password);
   return user;
 }
 

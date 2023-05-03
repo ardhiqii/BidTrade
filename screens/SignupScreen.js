@@ -5,6 +5,7 @@ import { UserContext } from "../store/user-context";
 import { useContext, useState } from "react";
 import { AuthContext } from "../store/auth-context";
 import LoadingOverlay from "../component/ui/LoadingOverlay";
+import { createDataUser } from "../util/user";
 export function SignupScreen() {
   const [isAuthenticating,setIsAuthenticating] = useState(false)
   const userCtx = useContext(UserContext)
@@ -13,6 +14,8 @@ export function SignupScreen() {
     setIsAuthenticating(true)
     try {
       const credentialsUser = await createUser(email, password, fullName);
+      const uid = credentialsUser.user.uid
+      await createDataUser(uid,fullName)
       const idToken = credentialsUser._tokenResponse.idToken;
       userCtx.updateDataUser(credentialsUser.user)
       authCtx.authenticate(idToken);

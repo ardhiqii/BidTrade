@@ -1,12 +1,16 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { truncateText } from "../../util/truncateText";
+import ModalAuctionProduct from "./modal/modalAuction/ModalAuctionProduct";
+import { useState } from "react";
+import FormatCurrency from "../../util/FormatCurrency";
 
-function AuctionDetailsTop(currentPrice) {
+function AuctionDetailsTop({ currentPrice, nameSeller }) {
   return (
     <View style={stylesTop.container}>
       <View style={[stylesTop.box]}>
         <Text style={stylesTop.headerText}>Seller</Text>
         <View>
-          <Text style={[stylesTop.text]}>Aufa Fauqi Ardhiqi</Text>
+          <Text style={[stylesTop.text]}>{nameSeller}</Text>
         </View>
       </View>
       {/* ================ */}
@@ -16,7 +20,7 @@ function AuctionDetailsTop(currentPrice) {
         </Text>
         <View>
           <Text style={[stylesTop.text, { textAlign: "right" }]}>
-            {"Rp." + currentPrice.currentPrice}
+            Rp {FormatCurrency(currentPrice)}
           </Text>
         </View>
       </View>
@@ -24,24 +28,63 @@ function AuctionDetailsTop(currentPrice) {
   );
 }
 
-function AuctionDetailsDescription() {
+function AuctionDetailsDescription({
+  description,
+  nameProduct,
+  imgUri,
+  detailsProduct
+}) {
+  const [onModal,changeOnModal] = useState(false)
+  const ModalAuctionProductProps = {
+    onModal,
+    changeOnModal,
+    nameProduct,
+    imgUri,
+    detailsProduct,
+    description
+  }
+  const truncated = truncateText(description);
+  const openModal = () =>{
+    changeOnModal(true)
+  }
   return (
     <View style={stylesDes.container}>
       <Text style={[stylesDes.text]}>Description</Text>
-      <Text style={stylesDes.desText}>
-        Togey a.k.a LEO is a person with animal behavior such as DOG
-      </Text>
+      <Text style={stylesDes.desText}>{truncated}</Text>
+      <Pressable onPress={openModal}>
+        <Text style={stylesDes.readMoreText}>Read More</Text>
+      </Pressable>
+      <ModalAuctionProduct {...ModalAuctionProductProps} customStyles={stylesDes.modal} />
     </View>
   );
 }
 
-function AuctionDetails({ nameProduct, currentPrice }) {
+function AuctionDetails({
+  nameProduct,
+  currentPrice,
+  description,
+  nameSeller,
+  imgUri,
+  detailsProduct
+}) {
+  const detailsTopProps = {
+    currentPrice,
+    nameSeller,
+  };
+  const AuctionDetailsDescrptionProps = {
+    description,
+    nameProduct,
+    imgUri,
+    detailsProduct
+  }
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={{ rowGap: 15 }}>
       <Text style={styles.textProduct}>{nameProduct}</Text>
-      <AuctionDetailsTop currentPrice={currentPrice} />
-      <AuctionDetailsDescription />
-    </View>
+      <AuctionDetailsTop {...detailsTopProps} />
+      <AuctionDetailsDescription
+        {...AuctionDetailsDescrptionProps}
+      />
+    </ScrollView>
   );
 }
 
@@ -51,7 +94,6 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 25,
     paddingTop: 12,
-    rowGap: 15,
   },
   textProduct: {
     fontSize: 25,
@@ -91,4 +133,10 @@ const stylesDes = StyleSheet.create({
   desText: {
     color: "#9a9a9a",
   },
+  readMoreText: {
+    color: "#3072e8",
+  },
+  modal:{
+    height:'100%'
+  }
 });
