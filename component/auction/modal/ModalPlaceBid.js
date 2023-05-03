@@ -1,28 +1,26 @@
-import { useNavigation } from "@react-navigation/native";
-import { useContext, useEffect, useState } from "react";
-import {
-  BackHandler,
-  Modal,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-import { TextInput } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
-import FormatCurrency from "../../../util/FormatCurrency";
-import TextInputPrice from "../../ui/TextInputPrice";
-import PlaceBidButton from "./PlaceBidButton";
+import { useContext, useState } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { UserContext } from "../../../store/user-context";
+import FormatCurrency from "../../../util/FormatCurrency";
 import { updateAuctionPrice } from "../../../util/auct";
 import ModalLayout from "../../ui/ModaLayout";
-function ModalPlaceBid({ onModal, changeOnModal,minPrice,idProduct,forceRefresh }) {
+import TextInputPrice from "../../ui/TextInputPrice";
+import PlaceBidButton from "./PlaceBidButton";
+import ChangeMethodPayment from "../../ui/ChangeMethodPayment";
+function ModalPlaceBid({
+  onModal,
+  changeOnModal,
+  minPrice,
+  idProduct,
+  forceRefresh,
+}) {
   const [inputUser, setInputUser] = useState({
     valid: true,
     price: "0",
   });
-  const userCtx = useContext(UserContext)
-  const userId = userCtx.user.uid
+  const userCtx = useContext(UserContext);
+  const userId = userCtx.user.uid;
   const submitHandler = async () => {
     userPrice = parseInt(inputUser.price.split(".").join(""), 10);
     if (userPrice <= minPrice) {
@@ -40,35 +38,46 @@ function ModalPlaceBid({ onModal, changeOnModal,minPrice,idProduct,forceRefresh 
         valid: true,
       };
     });
-    await updateAuctionPrice(userId,idProduct,userPrice)
+    await updateAuctionPrice(userId, idProduct, userPrice);
     return true;
   };
   return (
     <>
-          <ModalLayout onModal={onModal} changeOnModal={changeOnModal}>
-          <View style={styles.header}>
-            <Pressable onPress={() => changeOnModal(false)}>
-              <Ionicons name="md-close-outline" size={40} color={"#a8a8a8"} />
-            </Pressable>
-            <Text style={styles.headerText}>Place A Bid</Text>
-          </View>
+      <ModalLayout
+        onModal={onModal}
+        changeOnModal={changeOnModal}
+        blackTransparantBackground={true}
+      >
+        <View style={styles.header}>
+          <Pressable onPress={() => changeOnModal(false)}>
+            <Ionicons name="md-close-outline" size={40} color={"#a8a8a8"} />
+          </Pressable>
+          <Text style={styles.headerText}>Place A Bid</Text>
+        </View>
+        <View style={styles.container}>
           <View style={styles.contentContainer}>
             <Text>Minimal: Rp {FormatCurrency(minPrice)}</Text>
-            <TextInputPrice nominal={inputUser} setNominal={setInputUser} modalState={onModal} />
+            <TextInputPrice
+              nominal={inputUser}
+              setNominal={setInputUser}
+              modalState={onModal}
+            />
             {!inputUser.valid && (
               <Text style={styles.invalidText}>
                 *Place a bid with higher current price
               </Text>
             )}
           </View>
-          <PlaceBidButton
-            onConfirm={submitHandler}
-            forceRefreshHandler={forceRefresh}
-            closeModal={changeOnModal}
-          />
-          </ModalLayout>
-          
-        
+          <ChangeMethodPayment />
+          <View style={styles.containerButton}>
+            <PlaceBidButton
+              onConfirm={submitHandler}
+              forceRefreshHandler={forceRefresh}
+              closeModal={changeOnModal}
+            />
+          </View>
+        </View>
+      </ModalLayout>
     </>
   );
 }
@@ -76,7 +85,7 @@ function ModalPlaceBid({ onModal, changeOnModal,minPrice,idProduct,forceRefresh 
 export default ModalPlaceBid;
 
 const styles = StyleSheet.create({
-    header: {
+  header: {
     backgroundColor: "white",
     overflow: "hidden",
     borderTopLeftRadius: 10,
@@ -91,6 +100,9 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 20,
     fontWeight: "bold",
+  },
+  container: {
+    rowGap: 12,
   },
   contentContainer: {
     height: 180,
@@ -120,4 +132,5 @@ const styles = StyleSheet.create({
   invalidText: {
     color: "#fd785d",
   },
+  containerButton: {},
 });

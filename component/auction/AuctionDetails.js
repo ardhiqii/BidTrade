@@ -1,6 +1,6 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { truncateText } from "../../util/truncateText";
-import ModalAuctionProduct from "./modal/ModalAuctionProduct";
+import ModalAuctionProduct from "./modal/modalAuction/ModalAuctionProduct";
 import { useState } from "react";
 import FormatCurrency from "../../util/FormatCurrency";
 
@@ -30,11 +30,23 @@ function AuctionDetailsTop({ currentPrice, nameSeller }) {
 
 function AuctionDetailsDescription({
   description,
-  visible,
-  changeVisible,
-  openModal,
+  nameProduct,
+  imgUri,
+  detailsProduct
 }) {
+  const [onModal,changeOnModal] = useState(false)
+  const ModalAuctionProductProps = {
+    onModal,
+    changeOnModal,
+    nameProduct,
+    imgUri,
+    detailsProduct,
+    description
+  }
   const truncated = truncateText(description);
+  const openModal = () =>{
+    changeOnModal(true)
+  }
   return (
     <View style={stylesDes.container}>
       <Text style={[stylesDes.text]}>Description</Text>
@@ -42,7 +54,7 @@ function AuctionDetailsDescription({
       <Pressable onPress={openModal}>
         <Text style={stylesDes.readMoreText}>Read More</Text>
       </Pressable>
-      <ModalAuctionProduct onModal={visible} changeOnModal={changeVisible} />
+      <ModalAuctionProduct {...ModalAuctionProductProps} customStyles={stylesDes.modal} />
     </View>
   );
 }
@@ -52,24 +64,25 @@ function AuctionDetails({
   currentPrice,
   description,
   nameSeller,
+  imgUri,
+  detailsProduct
 }) {
   const detailsTopProps = {
     currentPrice,
     nameSeller,
   };
-  const [modalIsVisible, setModalIsVisible] = useState(false);
-  function openModal() {
-    setModalIsVisible(true);
+  const AuctionDetailsDescrptionProps = {
+    description,
+    nameProduct,
+    imgUri,
+    detailsProduct
   }
   return (
     <ScrollView style={styles.container} contentContainerStyle={{ rowGap: 15 }}>
       <Text style={styles.textProduct}>{nameProduct}</Text>
       <AuctionDetailsTop {...detailsTopProps} />
       <AuctionDetailsDescription
-        description={description}
-        visible={modalIsVisible}
-        changeVisible={setModalIsVisible}
-        openModal={openModal}
+        {...AuctionDetailsDescrptionProps}
       />
     </ScrollView>
   );
@@ -123,4 +136,7 @@ const stylesDes = StyleSheet.create({
   readMoreText: {
     color: "#3072e8",
   },
+  modal:{
+    height:'100%'
+  }
 });

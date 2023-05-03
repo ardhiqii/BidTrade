@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
+import { Alert, StyleSheet } from "react-native";
 import AuthContent from "../component/Auth/AuthContent";
-import { login } from "../util/auth";
+import LoadingOverlay from "../component/ui/LoadingOverlay";
 import { AuthContext } from "../store/auth-context";
 import { UserContext } from "../store/user-context";
-import { Alert, StyleSheet } from "react-native";
-import LoadingOverlay from "../component/ui/LoadingOverlay";
-import ModalAuctionProduct from "../component/auction/modal/ModalAuctionProduct";
+import { login } from "../util/auth";
+import ModalAuctionProduct from "../component/auction/modal/modalAuction/ModalAuctionProduct";
 
 function LoginScreen() {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
@@ -34,14 +34,13 @@ function LoginScreen() {
   return (
     <>
       <AuthContent isLogin onAuthenticate={loginHandler} />
-      <ModalAuctionProduct styles={styles.modalStyles}/>
     </>
   );
 }
 
 export default LoginScreen;
 const styles = StyleSheet.create({
-  modalStyles:{
-    height:'100%',
-  }
-})
+  modalStyles: {
+    height: "100%",
+  },
+});

@@ -1,3 +1,5 @@
+import { useRoute } from "@react-navigation/native";
+import { useEffect, useState } from "react";
 import {
   Dimensions,
   Image,
@@ -6,16 +8,12 @@ import {
   Text,
   View,
 } from "react-native";
-import AuctionDetails from "./AuctionDetails";
-import Button from "../ui/Button";
-import { useRoute } from "@react-navigation/native";
-import { DUMMY_DATA } from "./AuctionsDisplay";
-import { useEffect, useState } from "react";
+import { updateAuctionPrice } from "../../util/auct";
 import { getDataAuctionWithId } from "../../util/db";
 import { getDataUserById } from "../../util/user";
-import { updateAuctionPrice } from "../../util/auct";
+import Button from "../ui/Button";
+import AuctionDetails from "./AuctionDetails";
 
-import ModalAuctionProduct from "./modal/ModalAuctionProduct";
 import ModalPlaceBid from "./modal/ModalPlaceBid";
 
 const deviceHeight = Dimensions.get("window").height;
@@ -50,21 +48,25 @@ function AuctionContent() {
     current_price: currentPrice,
     description,
   } = dataProduct;
-  const updatePriceHandler = () => {
-    setFetchingData(false);
-    
-    updateAuctionPrice(idProduct, 1000000);
-  };
-  const forceRefreshHandler = () =>{
+  const detailsProduct = dataProduct.detail_product || ''
+  const forceRefreshHandler = () => {
     setUniqueValue((prev) => prev + 1);
-  }
+  };
   const modalPlaceBidProps = {
     minPrice: currentPrice,
-    idProduct:idProduct,
+    idProduct: idProduct,
     onModal: modalIsVisible,
     changeOnModal: setModalIsVisible,
-    forceRefresh:forceRefreshHandler
-  }
+    forceRefresh: forceRefreshHandler,
+  };
+  const AuctionDetailsProps = {
+    nameProduct: nameProduct,
+    currentPrice: currentPrice,
+    description: description,
+    nameSeller: nameSeller,
+    imgUri: imgUri,
+    detailsProduct: detailsProduct
+  };
   return (
     <View style={styles.container} key={uniqueValue}>
       <View style={styles.imageContainer}>
@@ -85,13 +87,9 @@ function AuctionContent() {
         </ImageBackground>
       </View>
       <AuctionDetails
-        nameProduct={nameProduct}
-        currentPrice={currentPrice}
-        description={description}
-        nameSeller={nameSeller}
+        {...AuctionDetailsProps}
       />
-      <ModalPlaceBid {...modalPlaceBidProps}
-      />
+      <ModalPlaceBid {...modalPlaceBidProps} />
       <View style={styles.buttonContainer}>
         <Button style={styles.button} onPress={() => setModalIsVisible(true)}>
           Place Bid

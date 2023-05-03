@@ -1,12 +1,11 @@
+import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import {
   ActivityIndicator,
   Pressable,
   StyleSheet,
-  Text,
-  View,
+  Text
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 
 const Loading = () => {
   return <ActivityIndicator color={"white"} size={"large"} />;
