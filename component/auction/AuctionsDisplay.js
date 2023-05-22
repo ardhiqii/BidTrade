@@ -82,7 +82,7 @@ export default AuctionsDisplay;
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 18,
+    paddingHorizontal:12,
   },
   itemSeperatorStyle: {
     width: 10,

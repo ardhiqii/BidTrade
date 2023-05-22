@@ -7,7 +7,8 @@ import LoadingOverlay from "../component/ui/LoadingOverlay";
 import { useNavigation } from "@react-navigation/core";
 import HomeContent from "../component/home/HomeContent";
 
-function HomeScreen() {
+function HomeScreen({ navigation, route, options }) {
+  
   const authCtx = useContext(AuthContext);
   const userCtx = useContext(UserContext);
   return <HomeContent />;

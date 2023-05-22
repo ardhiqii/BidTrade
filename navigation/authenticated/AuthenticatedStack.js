@@ -3,6 +3,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../../screens/HomeScreen";
 import AuctionScreen from "../../screens/auctionScreens/AuctionScreen";
 import AddAuctionScreen from "../../screens/auctionScreens/AddAuctionScreen";
+import Profile from "../../component/ui/Navbar/Profile";
+import { COLORS } from "../../styles/COLORS";
+import Navbar from "../../component/ui/Navbar/Navbar";
 
 const Stack = createNativeStackNavigator();
 
@@ -10,28 +13,21 @@ const BottomTab = createBottomTabNavigator();
 
 function BottomTabNavigator() {
   return (
-    <BottomTab.Navigator screenOptions={{
-      headerTintColor:'white',
-      headerStyle:{
-        backgroundColor:'#3072e8',
-        elevation:0,
-      },
-    }}>
+    <BottomTab.Navigator
+      screenOptions={{
+        headerTintColor: "white",
+        headerStyle: {
+          backgroundColor: COLORS.primary500,
+          elevation:0
+        },
+      }}
+    >
       <BottomTab.Screen
         name="Home"
         component={HomeScreen}
         options={{
-          headerTitle: "Browse",
-          headerTitleStyle:{
-            fontSize:30
-          },
-          headerTintColor:'white',
-          headerStyle:{
-            backgroundColor:'#3072e8',
-            elevation:0,
-            height:110,
-          },
-          
+          // headerTitle: ()=>{return <Navbar/>},
+          headerShown:false
         }}
       />
       <BottomTab.Screen name="AddAuction" component={AddAuctionScreen} />

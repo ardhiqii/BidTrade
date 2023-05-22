@@ -76,7 +76,7 @@ export default function App() {
 
   return (
     <>
-      <StatusBar style="light" />
+      <StatusBar style="dark" />
       <SafeAreaView style={{ flex: 1 }}>
         <AuthContextProvider>
           <UserContextProvider>

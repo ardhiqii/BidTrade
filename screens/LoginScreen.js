@@ -5,7 +5,8 @@ import LoadingOverlay from "../component/ui/LoadingOverlay";
 import { AuthContext } from "../store/auth-context";
 import { UserContext } from "../store/user-context";
 import { login } from "../util/auth";
-import ModalAuctionProduct from "../component/auction/modal/modalAuction/ModalAuctionProduct";
+import AddAuctionContent from "../component/addAuction/AddAuctionContent";
+import HomeScreen from "./HomeScreen";
 
 function LoginScreen() {
   const [isAuthenticating, setIsAuthenticating] = useState(false);

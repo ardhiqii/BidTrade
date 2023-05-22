@@ -15,10 +15,11 @@ export default Button;
 const styles = StyleSheet.create({
   button: {
     backgroundColor: "#3072e8",
-    paddingVertical: 18,
+    paddingVertical:15,
     paddingHorizontal: 12,
     borderRadius: 15,
     elevation: 5,
+    justifyContent:'center'
   },
   buttonText: {
     textAlign: "center",

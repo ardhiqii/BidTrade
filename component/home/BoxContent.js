@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     borderRadius:10,
   },
   headerContantainer: {
-    paddingHorizontal:18,
+    paddingHorizontal:24,
     flexDirection: "row",
     justifyContent: "space-between",
   },
