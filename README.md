@@ -1,6 +1,10 @@
 # BidTrade
 Simple android application about auction platform
 
+### Techs that used in project
+1. React Native
+2. Firebase
+
 # Screenshot
 ![image](https://github.com/ardhiqii/BidTrade/assets/79738424/04ba389e-0805-4fd5-9f1d-612f72e939c0)
 ![image](https://github.com/ardhiqii/BidTrade/assets/79738424/6795905b-58c7-40cd-a685-c34171ce2dbf)
