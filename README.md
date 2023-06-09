@@ -1,5 +1,5 @@
 # BidTrade
-Simple android application but still not fully function
+Simple android application about auction platform
 
 # Screenshot
 ![image](https://github.com/ardhiqii/BidTrade/assets/79738424/9156b08e-0d28-492c-9ca2-21c7c254fec5)
